@@ -62,7 +62,7 @@ namespace IndicatorEngine.Core
                 if (oldActive == newActive) break;
 
                 node.Active = newActive;
-                _logger.Log($"Update active to {newActive}", node.Id);
+                _logger?.Log($"Update active to {newActive}", node.Id);
                 
                 ActiveChanged?.Invoke(node.Id, newActive);
                 
@@ -80,7 +80,7 @@ namespace IndicatorEngine.Core
 
                 if (parentNode.ActiveChildCount < 0) parentNode.ActiveChildCount = 0;
 
-                _logger.Log($"Recompute active count to {parentNode.ActiveChildCount}", parentNode.Id);
+                _logger?.Log($"Recompute active count to {parentNode.ActiveChildCount}", parentNode.Id);
 
                 currentId = parentId;
             }
@@ -112,7 +112,7 @@ namespace IndicatorEngine.Core
                     stack.Push(childId);
                 }
 
-                _logger.Log("Remove subtree", node.Id);
+                _logger?.Log("Remove subtree", node.Id);
                 node.Children.Clear();
                 node.Parent = default;
 

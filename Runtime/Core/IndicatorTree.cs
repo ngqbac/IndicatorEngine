@@ -6,7 +6,7 @@ namespace IndicatorEngine.Core
     {
         private readonly AbsIndicatorLogger _logger;
 
-        public IndicatorTree(AbsIndicatorLogger logger)
+        public IndicatorTree(AbsIndicatorLogger logger = null)
         {
             _logger = logger;
         }
@@ -22,7 +22,7 @@ namespace IndicatorEngine.Core
             if (node.State == state) return;
 
             node.State = state;
-            _logger.Log($"Set state to {state}", id);
+            _logger?.Log($"Set state to {state}", id);
             RecomputeFrom(node.Id);
         }
 
@@ -40,7 +40,7 @@ namespace IndicatorEngine.Core
             if (node.StateCount == count) return;
 
             node.StateCount = count;
-            _logger.Log($"Set state count to {count}", id);
+            _logger?.Log($"Set state count to {count}", id);
 
             RecomputeFrom(node.Id);
         }
@@ -69,7 +69,7 @@ namespace IndicatorEngine.Core
             if (node.Muted == muted) return;
 
             node.Muted = muted;
-            _logger.Log($"Set muted {muted}", id);
+            _logger?.Log($"Set muted {muted}", id);
 
             RecomputeFrom(node.Id);
         }
@@ -95,7 +95,7 @@ namespace IndicatorEngine.Core
             childNode.Parent = parent;
             newParentNode.Children.Add(child);
             if (childNode.Active) newParentNode.ActiveChildCount++;
-            _logger.Log("Reparent {1} from {3} to {2}", child, parent, oldParentId);
+            _logger?.Log("Reparent {1} from {3} to {2}", child, parent, oldParentId);
 
             if (oldParentId.IsValid) RecomputeFrom(oldParentId);
             RecomputeFrom(parent);
@@ -119,7 +119,7 @@ namespace IndicatorEngine.Core
             }
 
             rootNode.Parent = default;
-            _logger.Log("Prune subtree", id);
+            _logger?.Log("Prune subtree", id);
 
             RemoveSubtree(id);
 

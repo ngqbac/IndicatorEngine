@@ -1,0 +1,51 @@
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# IDEs
+.idea/
+.vscode/
+*.sln
+*.csproj
+*.user
+*.unityproj
+
+# Unity-generated
+Library/
+Temp/
+Obj/
+Build/
+Logs/
+MemoryCaptures/
+UserSettings/
+
+# Unity cache
+*.pidb
+*.booproj
+*.svd
+*.userprefs
+
+# Builds
+*.apk
+*.aab
+*.ipa
+*.app
+
+# Tests
+TestResults/
+*.xml
+*.log
+
+# Crash logs
+sysinfo.txt
+*.stacktrace
+
+# npm-style lock files (just in case)
+package-lock.json
+npm-debug.log
+yarn.lock
+
+# Rider-specific
+.idea/
+*.sln.iml

@@ -12,7 +12,7 @@ namespace IndicatorEngine.Core
         private IndicatorVisual IndicatorVisual { get; set; }
         private AbsIndicatorLogger Logger { get; set; }
         
-        public IndicatorService(IndicatorTree indicatorTree, IndicatorContext context, AbsIndicatorLogger logger)
+        public IndicatorService(IndicatorTree indicatorTree, IndicatorContext context, AbsIndicatorLogger logger = null)
         {
             Logger = logger;
             IndicatorTree = indicatorTree;
@@ -91,7 +91,7 @@ namespace IndicatorEngine.Core
         public void CleanUp()
         {
             IndicatorVisual.CleanUp();
-            Logger.Log("Reset visual");
+            Logger?.Log("Reset visual");
         }
     }
 }

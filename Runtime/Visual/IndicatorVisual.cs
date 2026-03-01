@@ -21,7 +21,7 @@ namespace IndicatorEngine.Visual
         private readonly Dictionary<string, (IIndicatorHost host, IndicatorId id)> _hostToId = new();
         private readonly Dictionary<IndicatorId, (IIndicatorHost host, string hostKey)> _idToHost = new();
 
-        public IndicatorVisual(IndicatorTree tree, IndicatorContext ctx, AbsIndicatorLogger logger)
+        public IndicatorVisual(IndicatorTree tree, IndicatorContext ctx, AbsIndicatorLogger logger = null)
         {
             _tree = tree;
             _ctx = ctx;
@@ -54,7 +54,7 @@ namespace IndicatorEngine.Visual
             host.SetIndicatorId(id);
             host.SetState(_tree.GetState(id));
             
-            _logger.Log("Bind host", id);
+            _logger?.Log("Bind host", id);
         }
 
         public void Unbind(IIndicatorHost host)
@@ -67,7 +67,7 @@ namespace IndicatorEngine.Visual
         {
             if (!_idToHost.TryGetValue(id, out var pair)) return;
             UnbindByHostKey(pair.hostKey);
-            _logger.Log("Unbind host", id);
+            _logger?.Log("Unbind host", id);
         }
 
         private void UnbindByHostKey(string hostKey)
@@ -115,7 +115,7 @@ namespace IndicatorEngine.Visual
 
                 for (var i = blueprints.Count - 1; i >= 0; i--)
                 {
-                    _logger.Log($"Built blueprint {i}", id);
+                    _logger?.Log($"Built blueprint {i}", id);
                     if (blueprints[i].TryCompose(_ctx)) blueprints.RemoveAt(i);
                 }
 
@@ -127,13 +127,13 @@ namespace IndicatorEngine.Visual
             finally
             {
                 _building.Remove(id);
-                _logger.Log("Built complete", id);
+                _logger?.Log("Built complete", id);
             }
         }
 
         private void OnActiveChanged(IndicatorId id, bool active)
         {
-            _logger.Log("OnActiveChanged", id);
+            _logger?.Log("OnActiveChanged", id);
             if (_idToHost.TryGetValue(id, out var pair)) pair.host?.SetState(active);
         }
 
