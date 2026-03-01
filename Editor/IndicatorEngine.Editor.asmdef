@@ -1,0 +1,11 @@
+{
+  "name": "IndicatorEngine.Editor",
+  "rootNamespace": "IndicatorEngine.Editor",
+  "references": [
+    "IndicatorEngine"
+  ],
+  "includePlatforms": [
+    "Editor"
+  ],
+  "autoReferenced": true
+}

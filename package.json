@@ -1,0 +1,11 @@
+{
+  "name": "com.norty.indicator.engine",
+  "displayName": "IndicatorEngine",
+  "version": "1.0.0",
+  "unity": "2022.3",
+  "description": "Self-aware, self-initializing, composable objects with lifecycle and pooling.",
+  "author": {
+    "name": "NortyGuy",
+    "email": "ngqbac@gmail.com"
+  }
+}

@@ -1,0 +1,7 @@
+{
+  "name": "IndicatorEngine",
+  "rootNamespace": "IndicatorEngine",
+  "references": [],
+  "includePlatforms": [],
+  "autoReferenced": true
+}
