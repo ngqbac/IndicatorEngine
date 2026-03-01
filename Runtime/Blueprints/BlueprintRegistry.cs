@@ -1,10 +1,10 @@
 using System.Collections.Generic;
-using IndicatorEngine.Abstraction;
+using IndicatorEngine.Abstractions;
 using IndicatorEngine.Core;
 
-namespace IndicatorEngine.Utilities
+namespace IndicatorEngine.Blueprints
 {
-    public class BlueprintHelper
+    public class BlueprintRegistry
     {
         private static readonly Dictionary<IndicatorId, List<IIndicatorBlueprint>> Blueprints = new();
 

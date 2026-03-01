@@ -1,4 +1,4 @@
-using IndicatorEngine.Abstraction;
+using IndicatorEngine.Logging;
 
 namespace IndicatorEngine.Core
 {
@@ -17,7 +17,7 @@ namespace IndicatorEngine.Core
         public void SetState(IndicatorId id, bool state)
         {
             if (!id.IsValid) return;
-            
+
             var node = Get(id);
             if (node.State == state) return;
 
@@ -25,7 +25,7 @@ namespace IndicatorEngine.Core
             _logger.Log($"Set state to {state}", id);
             RecomputeFrom(node.Id);
         }
-        
+
         /// <summary>
         /// Sets a counter source for a node. Active if count > 0.
         /// Passing <= 0 clears it (treat as 0).
@@ -41,10 +41,10 @@ namespace IndicatorEngine.Core
 
             node.StateCount = count;
             _logger.Log($"Set state count to {count}", id);
-            
+
             RecomputeFrom(node.Id);
         }
-        
+
         public void UpdateStateCount(IndicatorId id, int delta)
         {
             if (!id.IsValid) return;
@@ -60,7 +60,7 @@ namespace IndicatorEngine.Core
             node.StateCount = next;
             RecomputeFrom(node.Id);
         }
-        
+
         public void SetMuted(IndicatorId id, bool muted)
         {
             if (!id.IsValid) return;
@@ -70,10 +70,10 @@ namespace IndicatorEngine.Core
 
             node.Muted = muted;
             _logger.Log($"Set muted {muted}", id);
-            
+
             RecomputeFrom(node.Id);
         }
-        
+
         public void Reparent(IndicatorId child, IndicatorId parent)
         {
             if (!child.IsValid || !parent.IsValid) return;
@@ -84,23 +84,23 @@ namespace IndicatorEngine.Core
 
             var oldParentId = childNode.Parent;
             var newParentNode = Get(parent);
-            
+
             if (oldParentId.IsValid && _nodes.TryGetValue(oldParentId, out var oldParentNode))
             {
                 oldParentNode.Children.Remove(child);
                 if (childNode.Active) oldParentNode.ActiveChildCount--;
                 if (oldParentNode.ActiveChildCount < 0) oldParentNode.ActiveChildCount = 0;
             }
-            
+
             childNode.Parent = parent;
             newParentNode.Children.Add(child);
             if (childNode.Active) newParentNode.ActiveChildCount++;
             _logger.Log("Reparent {1} from {3} to {2}", child, parent, oldParentId);
-            
+
             if (oldParentId.IsValid) RecomputeFrom(oldParentId);
             RecomputeFrom(parent);
         }
-        
+
         /// <summary>
         /// Deletes node and its subtree.
         /// </summary>
@@ -110,7 +110,7 @@ namespace IndicatorEngine.Core
             if (!_nodes.TryGetValue(id, out var rootNode)) return;
 
             var parentId = rootNode.Parent;
-            
+
             if (parentId.IsValid && _nodes.TryGetValue(parentId, out var parentNode))
             {
                 parentNode.Children.Remove(id);

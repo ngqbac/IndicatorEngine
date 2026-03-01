@@ -1,9 +1,12 @@
 using System;
 using System.Collections.Generic;
-using IndicatorEngine.Abstraction;
 using IndicatorEngine.Utilities;
+using IndicatorEngine.Abstractions;
+using IndicatorEngine.Blueprints;
+using IndicatorEngine.Core;
+using IndicatorEngine.Logging;
 
-namespace IndicatorEngine.Core
+namespace IndicatorEngine.Visual
 {
     public class IndicatorVisual
     {

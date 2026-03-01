@@ -4,7 +4,7 @@ using IndicatorEngine.Core;
 
 namespace IndicatorEngine.Utilities
 {
-    public static class Helper
+    public static class IndicatorEngineUtilities
     {
         private const string IdConnector = "|";
         

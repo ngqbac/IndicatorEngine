@@ -1,9 +1,9 @@
 using System.Collections.Generic;
 using System.Text;
-using IndicatorEngine.Core;
 using IndicatorEngine.Utilities;
+using IndicatorEngine.Core;
 
-namespace IndicatorEngine.Abstraction
+namespace IndicatorEngine.Logging
 {
     public abstract class AbsIndicatorLogger
     {

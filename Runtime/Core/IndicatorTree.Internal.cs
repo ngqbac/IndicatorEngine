@@ -1,6 +1,6 @@
 using System;
 using System.Collections.Generic;
-using IndicatorEngine.Abstraction;
+using IndicatorEngine.Abstractions;
 
 namespace IndicatorEngine.Core
 {

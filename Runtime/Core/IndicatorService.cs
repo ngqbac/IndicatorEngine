@@ -1,16 +1,18 @@
-using IndicatorEngine.Abstraction;
-using IndicatorEngine.Utilities;
+using IndicatorEngine.Abstractions;
+using IndicatorEngine.Blueprints;
+using IndicatorEngine.Logging;
+using IndicatorEngine.Visual;
 
 namespace IndicatorEngine.Core
 {
-    public class IndicatorEngine : IIndicatorEngine
+    public class IndicatorService : IIndicatorService
     {
         private IndicatorTree IndicatorTree { get; set; }
         private IndicatorContext Context { get; set; }
         private IndicatorVisual IndicatorVisual { get; set; }
         private AbsIndicatorLogger Logger { get; set; }
         
-        public IndicatorEngine(IndicatorTree indicatorTree, IndicatorContext context, AbsIndicatorLogger logger)
+        public IndicatorService(IndicatorTree indicatorTree, IndicatorContext context, AbsIndicatorLogger logger)
         {
             Logger = logger;
             IndicatorTree = indicatorTree;

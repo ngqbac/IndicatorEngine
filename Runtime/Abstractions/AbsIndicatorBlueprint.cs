@@ -1,6 +1,6 @@
 using IndicatorEngine.Core;
 
-namespace IndicatorEngine.Abstraction
+namespace IndicatorEngine.Abstractions
 {
     public abstract class AbsIndicatorBlueprint : IIndicatorBlueprint
     {

@@ -1,9 +1,9 @@
 using System;
 using System.Collections.Generic;
-using IndicatorEngine.Abstraction;
+using IndicatorEngine.Abstractions;
 using IndicatorEngine.Core;
 
-namespace IndicatorEngine.Utilities
+namespace IndicatorEngine.Blueprints
 {
     public static class BlueprintHooks
     {
