@@ -28,16 +28,20 @@ jobs:
           echo "VERSION=$VERSION" >> $GITHUB_ENV
           echo "tag=v$VERSION" >> $GITHUB_OUTPUT
 
-      # Skip tagging/releases for 0.x.x versions
-      - name: Skip pre-1.0.0 versions
+      - name: Gate: only run for >= 1.0.0
+        id: gate
         run: |
           MAJOR="${VERSION%%.*}"
           if [ "$MAJOR" -lt 1 ]; then
-            echo "Version $VERSION is pre-1.0.0. Skipping tag/release."
-            exit 0
+            echo "skip=true" >> $GITHUB_OUTPUT
+            echo "Pre-1.0.0 version ($VERSION). Skipping tag/release."
+          else
+            echo "skip=false" >> $GITHUB_OUTPUT
+            echo "Version $VERSION is eligible for tag/release."
           fi
 
       - name: Check if tag exists
+        if: steps.gate.outputs.skip != 'true'
         id: tag_exists
         run: |
           if git rev-parse "${{ steps.ver.outputs.tag }}" >/dev/null 2>&1; then
@@ -47,12 +51,13 @@ jobs:
           fi
 
       - name: Stop if tag already exists
-        if: steps.tag_exists.outputs.exists == 'true'
+        if: steps.gate.outputs.skip != 'true' && steps.tag_exists.outputs.exists == 'true'
         run: |
           echo "Tag already exists. Skipping."
           exit 0
 
       - name: Create and push tag
+        if: steps.gate.outputs.skip != 'true' && steps.tag_exists.outputs.exists != 'true'
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
@@ -60,6 +65,7 @@ jobs:
           git push origin "v${VERSION}"
 
       - name: Extract and format release notes (strip version heading)
+        if: steps.gate.outputs.skip != 'true' && steps.tag_exists.outputs.exists != 'true'
         run: |
           VER="${VERSION}"
 
@@ -70,7 +76,6 @@ jobs:
             found==1 {print}
           ' CHANGELOG.md > release-notes.md
 
-          # Fallback if section not found / empty
           if [ ! -s release-notes.md ]; then
             echo "Changes" > release-notes.md
             echo "" >> release-notes.md
@@ -78,6 +83,7 @@ jobs:
           fi
 
       - name: Create GitHub Release
+        if: steps.gate.outputs.skip != 'true' && steps.tag_exists.outputs.exists != 'true'
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
