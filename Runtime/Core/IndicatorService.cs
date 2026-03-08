@@ -59,7 +59,7 @@ namespace IndicatorEngine.Core
             IndicatorTree.UpdateStateCount(id, delta);
         }
 
-        public void RefreshFromRoot(IndicatorId id)
+        public void RefreshBranch(IndicatorId id)
         {
             if (!id.IsValid) return;
             var blueprints = BlueprintHooks.Get(id);
@@ -68,6 +68,8 @@ namespace IndicatorEngine.Core
                 blueprint.Refresh(Context);
             }
         }
+
+        public void RefreshBlueprint(AbsIndicatorBlueprint blueprint) => blueprint.Refresh(Context);
 
         public void Reparent(IndicatorId child, IndicatorId parent)
         {

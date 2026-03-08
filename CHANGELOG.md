@@ -15,3 +15,11 @@
     - forwards tree events to bound hosts
     - lazy hydration with recursion guard and pending retry support
 - Logging base abstraction (`AbsIndicatorLogger`) for project-defined logging output.
+
+## [1.0.1] - Maintenance
+### Added
+- Added manual refresh APIs to force-sync indicator state:
+  - `RefreshBlueprint(AbsIndicatorBlueprint blueprint)`
+### Changed
+- Renamed manual refresh APIs for clarity:
+  - `RefreshFromRoot(IndicatorId)` → `RefreshBranch(IndicatorId)`

@@ -11,7 +11,8 @@ namespace IndicatorEngine.Abstractions
         void SetState(IndicatorId id, bool state);
         void SetStateCount(IndicatorId id, int count);
         void UpdateStateCount(IndicatorId id, int delta);
-        void RefreshFromRoot(IndicatorId id);
+        void RefreshBranch(IndicatorId id);
+        void RefreshBlueprint(AbsIndicatorBlueprint blueprint);
 
         void Reparent(IndicatorId child, IndicatorId parent);
         void Prune(IndicatorId id);
