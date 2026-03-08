@@ -28,7 +28,7 @@ jobs:
           echo "VERSION=$VERSION" >> $GITHUB_ENV
           echo "tag=v$VERSION" >> $GITHUB_OUTPUT
 
-      - name: "Gate (only run for >= 1.0.0)"
+      - name: "Gate run for version >= 1.0.0"
         id: gate
         run: |
           MAJOR="${VERSION%%.*}"
