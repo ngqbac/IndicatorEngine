@@ -1,6 +1,6 @@
 # IndicatorEngine
 
-[![Latest Version](https://img.shields.io/github/v/tag/ngqbac/IndicatorEngine)](https://github.com/ngqbac/IndicatorEngine)
+[![Latest Version](https://img.shields.io/github/v/tag/ngqbac/IndicatorEngine?filter=v*&sort=semver)](https://github.com/ngqbac/IndicatorEngine/tags)
 
 **IndicatorEngine** is a lightweight, hierarchical indicator system for Unity.
 
