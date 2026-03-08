@@ -28,6 +28,14 @@ jobs:
           echo "VERSION=$VERSION" >> $GITHUB_ENV
           echo "tag=v$VERSION" >> $GITHUB_OUTPUT
 
+      - name: Skip pre-1.0.0 versions
+        run: |
+          MAJOR="${VERSION%%.*}"
+          if [ "$MAJOR" -lt 1 ]; then
+            echo "Version $VERSION is pre-1.0.0. Skipping."
+            exit 0
+          fi
+
       - name: Check if tag exists
         id: tag_exists
         run: |
