@@ -4,7 +4,7 @@ on:
   push:
     branches: [main]
     paths:
-      - "package.json" # change if your package.json is in a subfolder
+      - "package.json"
 
 permissions:
   contents: write
@@ -71,8 +71,8 @@ jobs:
 
           awk -v ver="$VER" '
             BEGIN {found=0}
-            $0 ~ "^## \\[" ver "\\]" {found=1; next}   # skip the "## [x.y.z]" line
-            found==1 && $0 ~ "^## \\[" {exit}          # stop at next version header
+            $0 ~ "^## \\[" ver "\\]" {found=1; next}
+            found==1 && $0 ~ "^## \\[" {exit}
             found==1 {print}
           ' CHANGELOG.md > release-notes.md
 
