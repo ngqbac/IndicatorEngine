@@ -4,7 +4,7 @@ on:
   push:
     branches: [main]
     paths:
-      - "package.json"
+      - "package.json"   # adjust if your package.json is in a folder
 
 permissions:
   contents: write
@@ -47,13 +47,30 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git tag "${{ steps.ver.outputs.tag }}"
-          git push origin "${{ steps.ver.outputs.tag }}"
+          git tag "v${VERSION}"
+          git push origin "v${VERSION}"
 
-      - name: Create GitHub Release (CHANGELOG.md)
+      - name: Extract and format release notes
+        run: |
+          VER="${VERSION}"
+
+          awk -v ver="$VER" '
+            BEGIN {found=0}
+            $0 ~ "^## \\[" ver "\\]" {found=1; next}
+            found==1 && $0 ~ "^## \\[" {exit}
+            found==1 {print}
+          ' CHANGELOG.md > release-notes.md
+
+          if [ ! -s release-notes.md ]; then
+            echo "Changes" > release-notes.md
+            echo "" >> release-notes.md
+            echo "- Automated release for version $VER." >> release-notes.md
+          fi
+
+      - name: Create GitHub Release
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          gh release create "${{ steps.ver.outputs.tag }}" \
-            --title "${{ steps.ver.outputs.tag }}" \
-            --notes-file CHANGELOG.md
+          gh release create "v${VERSION}" \
+            --title "IndicatorEngine ${VERSION}" \
+            --notes-file release-notes.md
