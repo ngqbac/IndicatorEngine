@@ -4,7 +4,7 @@ on:
   push:
     branches: [main]
     paths:
-      - "package.json"   # adjust if your package.json is in a folder
+      - "package.json" # change if your package.json is in a subfolder
 
 permissions:
   contents: write
@@ -28,11 +28,12 @@ jobs:
           echo "VERSION=$VERSION" >> $GITHUB_ENV
           echo "tag=v$VERSION" >> $GITHUB_OUTPUT
 
+      # Skip tagging/releases for 0.x.x versions
       - name: Skip pre-1.0.0 versions
         run: |
           MAJOR="${VERSION%%.*}"
           if [ "$MAJOR" -lt 1 ]; then
-            echo "Version $VERSION is pre-1.0.0. Skipping."
+            echo "Version $VERSION is pre-1.0.0. Skipping tag/release."
             exit 0
           fi
 
@@ -58,17 +59,18 @@ jobs:
           git tag "v${VERSION}"
           git push origin "v${VERSION}"
 
-      - name: Extract and format release notes
+      - name: Extract and format release notes (strip version heading)
         run: |
           VER="${VERSION}"
 
           awk -v ver="$VER" '
             BEGIN {found=0}
-            $0 ~ "^## \\[" ver "\\]" {found=1; next}
-            found==1 && $0 ~ "^## \\[" {exit}
+            $0 ~ "^## \\[" ver "\\]" {found=1; next}   # skip the "## [x.y.z]" line
+            found==1 && $0 ~ "^## \\[" {exit}          # stop at next version header
             found==1 {print}
           ' CHANGELOG.md > release-notes.md
 
+          # Fallback if section not found / empty
           if [ ! -s release-notes.md ]; then
             echo "Changes" > release-notes.md
             echo "" >> release-notes.md
