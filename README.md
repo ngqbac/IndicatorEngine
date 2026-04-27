@@ -2,8 +2,6 @@
 
 [![Latest Version](https://img.shields.io/github/v/tag/ngqbac/IndicatorEngine?filter=v*&sort=semver)](https://github.com/ngqbac/IndicatorEngine/tags) [![License](https://img.shields.io/github/license/ngqbac/IndicatorEngine)](https://github.com/ngqbac/IndicatorEngine/blob/main/LICENSE)
 
-[![com.test](https://img.shields.io/github/v/tag/ngqbac/IndicatorEngine?filter=v*&sort=semver)](https://github.com/ngqbac/IndicatorEngine/tags)
-
 **IndicatorEngine** is a lightweight, hierarchical indicator system for Unity.
 
 Built on a fast indicator **tree**, **lazy blueprint hydration** (structure is installed only when touched), and a **host binding** layer that keeps UI automatically in sync.
